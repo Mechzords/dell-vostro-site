@@ -4,26 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dell Vostro 3520</title>
-  <!-- Tailwind CSS CDN (or your own build) -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons (if not bundled via React) -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js"></script>
 </head>
 <body>
   <div id="root"></div>
 
-  <!-- React and ReactDOM CDN -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Your Component Script -->
+  <!-- React and ReactDOM -->
   <script type="module">
-    import { useState, useEffect } from "https://cdn.jsdelivr.net/npm/react@18/esm/react.js";
-    import { Cpu, HardDrive, Monitor, Battery, Zap, Thermometer, Wifi, Usb, Cable, Network, Headphones, Clock, Shield, Briefcase, Code, Users } from "https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js";
+    // Import React & ReactDOM
+    import React, { useState, useEffect } from 'https://cdn.jsdelivr.net/npm/react@18/esm/react.js';
+    import ReactDOM from 'https://cdn.jsdelivr.net/npm/react-dom@18/esm/react-dom.js';
 
-    // (Insert your entire Index component code here)
+    // Import Lucide icons
+    import { Cpu, HardDrive, Monitor, Battery, Zap, Thermometer, Wifi, Usb, Cable, Network, Headphones, Clock, Shield, Briefcase, Code, Users } from 'https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js';
 
-    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Index));
+    // Your Index component
+    const Index = () => {
+      const [systemStats, setSystemStats] = useState({
+        power: 87,
+        battery: 94,
+        temperature: 42,
+      });
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setSystemStats({
+            power: Math.floor(Math.random() * 20) + 80,
+            battery: Math.floor(Math.random() * 10) + 90,
+            temperature: Math.floor(Math.random() * 10) + 38,
+          });
+        }, 3000);
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <div className="min-h-screen bg-gray-900 text-white p-8">
+          <h1 className="text-5xl font-bold text-center mb-8">Dell Vostro 3520</h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 bg-gray-800 rounded-lg text-center">
+              <Zap className="w-10 h-10 mx-auto mb-2" />
+              <h2 className="text-xl font-semibold">System Power</h2>
+              <p className="text-2xl font-bold">{systemStats.power}%</p>
+            </div>
+            <div className="p-6 bg-gray-800 rounded-lg text-center">
+              <Battery className="w-10 h-10 mx-auto mb-2" />
+              <h2 className="text-xl font-semibold">Battery Level</h2>
+              <p className="text-2xl font-bold">{systemStats.battery}%</p>
+            </div>
+            <div className="p-6 bg-gray-800 rounded-lg text-center">
+              <Thermometer className="w-10 h-10 mx-auto mb-2" />
+              <h2 className="text-xl font-semibold">Temperature</h2>
+              <p className="text-2xl font-bold">{systemStats.temperature}°C</p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // Render the component
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Index));
   </script>
 </body>
 </html>
