@@ -3,140 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dell Vostro 3520</title>
+  <title>Hardware Universe</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-white">
   <div id="root"></div>
 
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Component Code -->
   <script type="module">
-    import React, { useState, useEffect } from 'https://cdn.jsdelivr.net/npm/react@18/esm/react.js';
-    import ReactDOM from 'https://cdn.jsdelivr.net/npm/react-dom@18/esm/react-dom.js';
+    import { useState, useEffect } from "https://cdn.jsdelivr.net/npm/react@18/esm/react.js";
     import {
-      Cpu, HardDrive, Monitor, Battery, Zap, Thermometer, Wifi, Usb, Cable, Network, Headphones, Clock, Shield, Briefcase, Code, Users
-    } from 'https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js';
+      Cpu, Monitor, MemoryStick, CircuitBoard, HardDrive,
+      Zap, Fan, Keyboard
+    } from "https://cdn.jsdelivr.net/npm/lucide/dist/lucide.esm.js";
 
-    // Placeholder images (replace with your assets)
-    const laptopHero = "https://via.placeholder.com/600x400.png?text=Laptop+Hero";
-    const liquidBg = "https://via.placeholder.com/1200x800.png?text=Liquid+Background";
+    // Images - you’ll need to replace these with public URLs or base64 if opening directly
+    const cpuImage = "https://via.placeholder.com/400x250?text=CPU";
+    const gpuImage = "https://via.placeholder.com/400x250?text=GPU";
+    const ramImage = "https://via.placeholder.com/400x250?text=RAM";
+    const motherboardImage = "https://via.placeholder.com/400x250?text=Motherboard";
+    const storageImage = "https://via.placeholder.com/400x250?text=Storage";
+    const coolingImage = "https://via.placeholder.com/400x250?text=Cooling";
 
-    const Index = () => {
-      const [systemStats, setSystemStats] = useState({ power: 87, battery: 94, temperature: 42 });
+    // Hardware Component Data
+    const hardwareComponents = [
+      { title: "CPU", description: "Brain of the PC", icon: Cpu, image: cpuImage },
+      { title: "GPU", description: "Graphics processor", icon: Monitor, image: gpuImage },
+      { title: "RAM", description: "Short-term memory", icon: MemoryStick, image: ramImage },
+      { title: "Motherboard", description: "Central hub", icon: CircuitBoard, image: motherboardImage },
+      { title: "Storage", description: "Permanent memory", icon: HardDrive, image: storageImage },
+      { title: "Cooling", description: "Prevents overheating", icon: Fan, image: coolingImage },
+      { title: "Power Supply", description: "Supplies power", icon: Zap, image: cpuImage },
+      { title: "Keyboard", description: "Input device", icon: Keyboard, image: gpuImage },
+    ];
 
-      useEffect(() => {
-        const interval = setInterval(() => {
-          setSystemStats({
-            power: Math.floor(Math.random() * 20) + 80,
-            battery: Math.floor(Math.random() * 10) + 90,
-            temperature: Math.floor(Math.random() * 10) + 38,
-          });
-        }, 3000);
-        return () => clearInterval(interval);
-      }, []);
+    // Simple Hardware Card Component
+    const HardwareCard = ({ title, description, icon: Icon, image }) => (
+      React.createElement('div', { className: "glass-panel rounded-xl p-4 hover:scale-105 transition-transform" },
+        React.createElement('img', { src: image, alt: title, className: "rounded-lg mb-4 w-full h-48 object-cover" }),
+        React.createElement('div', { className: "flex items-center gap-2 mb-2" },
+          React.createElement(Icon, { className: "w-6 h-6 text-cyan-400" }),
+          React.createElement('h3', { className: "font-bold text-lg" }, title)
+        ),
+        React.createElement('p', null, description)
+      )
+    );
 
-      const specs = [
-        { icon: Cpu, title: "Processor", value: "Intel Core i5-1235U", detail: "12th Gen" },
-        { icon: HardDrive, title: "RAM", value: "8GB DDR4", detail: "3200MHz" },
-        { icon: HardDrive, title: "Storage", value: "512GB NVMe SSD", detail: "Ultra-fast" },
-        { icon: Monitor, title: "Display", value: "15.6-inch Full HD", detail: "1920x1080" },
-        { icon: Zap, title: "Graphics", value: "Intel UHD", detail: "Integrated" },
-        { icon: Battery, title: "Battery", value: "3-cell 41Wh", detail: "Li-ion" },
-      ];
+    // Main App
+    const App = () => (
+      React.createElement('div', { className: "min-h-screen bg-gray-900 p-8" },
+        React.createElement('header', { className: "text-center mb-12" },
+          React.createElement('h1', { className: "text-5xl font-bold gradient-text" }, "Hardware Universe")
+        ),
+        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" },
+          hardwareComponents.map((component, i) => React.createElement(HardwareCard, { key: i, ...component }))
+        ),
+        React.createElement('footer', { className: "mt-12 text-center text-gray-400" },
+          "© 2025 Hardware Universe. Explore, Learn, Build."
+        )
+      )
+    );
 
-      const features = [
-        { icon: Briefcase, title: "Business Ready", description: "Optimized for professional workflows with enterprise-grade security features and reliable performance." },
-        { icon: Shield, title: "Enhanced Security", description: "TPM 2.0 chip, fingerprint reader option, and comprehensive security software." },
-        { icon: Clock, title: "All-Day Battery", description: "Up to 8 hours of battery life with ExpressCharge technology." },
-        { icon: Code, title: "Developer Friendly", description: "Perfect for coding with powerful processor and ample RAM." },
-        { icon: Users, title: "Collaboration Tools", description: "HD webcam with dual-array microphones for crystal-clear video calls." },
-        { icon: Zap, title: "Quick Performance", description: "Fast boot times under 10 seconds with NVMe SSD." },
-      ];
-
-      const useCases = [
-        { title: "Business Professionals", description: "Excel at productivity tasks with Microsoft Office, video conferencing, and cloud applications.", highlight: "Multitasking Champion" },
-        { title: "Content Creators", description: "Handle photo editing, document design, and light video work.", highlight: "Creative Workflow" },
-        { title: "Students & Educators", description: "Ideal for research, online learning, presentations, and assignments.", highlight: "Education Ready" },
-        { title: "Developers", description: "Run IDEs, compile code, manage databases, and handle web development tasks efficiently.", highlight: "Dev Environment" },
-      ];
-
-      const galleryImages = [laptopHero, liquidBg, laptopHero];
-
-      return (
-        <div className="min-h-screen relative bg-gray-900 text-white">
-          {/* Hero */}
-          <section className="min-h-screen flex items-center justify-center px-4 py-20">
-            <div className="text-center mb-16">
-              <h1 className="text-6xl font-bold mb-6">Dell Vostro 3520</h1>
-              <p className="text-2xl font-light">Power. Precision. Performance</p>
-            </div>
-          </section>
-
-          {/* Specs */}
-          <section className="py-20 px-4">
-            <h2 className="text-4xl font-bold text-center mb-12">Technical Specifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {specs.map((spec, idx) => (
-                <div key={idx} className="bg-gray-800 p-6 rounded-lg text-center">
-                  <spec.icon className="w-10 h-10 mx-auto mb-2" />
-                  <h3 className="font-semibold text-xl">{spec.title}</h3>
-                  <p className="font-bold text-primary">{spec.value}</p>
-                  <p className="text-sm">{spec.detail}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Features */}
-          <section className="py-20 px-4 bg-gray-800">
-            <h2 className="text-4xl font-bold text-center mb-12">Key Features</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {features.map((f, idx) => (
-                <div key={idx} className="p-6 bg-gray-700 rounded-lg text-center">
-                  <f.icon className="w-10 h-10 mx-auto mb-2" />
-                  <h3 className="font-semibold text-xl">{f.title}</h3>
-                  <p className="text-sm mt-2">{f.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* System Monitor */}
-          <section className="py-20 px-4">
-            <h2 className="text-4xl font-bold text-center mb-12">System Monitor</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-6 bg-gray-800 rounded-lg text-center">
-                <Zap className="w-10 h-10 mx-auto mb-2" />
-                <h3 className="font-semibold">System Power</h3>
-                <p className="text-2xl font-bold">{systemStats.power}%</p>
-              </div>
-              <div className="p-6 bg-gray-800 rounded-lg text-center">
-                <Battery className="w-10 h-10 mx-auto mb-2" />
-                <h3 className="font-semibold">Battery Level</h3>
-                <p className="text-2xl font-bold">{systemStats.battery}%</p>
-              </div>
-              <div className="p-6 bg-gray-800 rounded-lg text-center">
-                <Thermometer className="w-10 h-10 mx-auto mb-2" />
-                <h3 className="font-semibold">Temperature</h3>
-                <p className="text-2xl font-bold">{systemStats.temperature}°C</p>
-              </div>
-            </div>
-          </section>
-
-          {/* Gallery */}
-          <section className="py-20 px-4 bg-gray-900">
-            <h2 className="text-4xl font-bold text-center mb-12">Gallery</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {galleryImages.map((img, idx) => (
-                <img key={idx} src={img} className="w-full rounded-lg" />
-              ))}
-            </div>
-          </section>
-        </div>
-      );
-    };
-
-    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Index));
+    // Render App
+    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
   </script>
+
+  <style>
+    .glass-panel {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #06b6d4, #9333ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
 </body>
 </html>
